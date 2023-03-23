@@ -1,3 +1,4 @@
+import decimal
 import json
 import unittest.mock
 from typing import Tuple
@@ -117,6 +118,43 @@ class AlbumsAPITests(TestCase):
 
         # then
         self.assertEquals(response.status_code, HTTPStatus.BAD_REQUEST)
+
+    def test_get_top_albums_sorted(self) -> None:
+        # given
+        low_cat = ITunesCategoryFactory(label="AAA", term="AAA")
+        high_cat = ITunesCategoryFactory(label="ZZZ", term="ZZZ")
+        expected_third = AlbumFactory(name="Expected Third", itunes_category=high_cat, itunes_price_dollars=decimal.Decimal("29.99"))
+        expected_second = AlbumFactory(name="Expected Second", itunes_category=low_cat, itunes_price_dollars=decimal.Decimal("9.99"))
+        expected_first = AlbumFactory(name="Expected First", itunes_category=low_cat, itunes_price_dollars=decimal.Decimal("19.99"))
+
+        # when
+        response = self.client.get("/top-albums/?sort=category,-price")
+
+        # then
+        self.assertEquals(response.status_code, HTTPStatus.OK)
+        contents, _ = self._assert_response_has_contents_and_pagination(response)
+        self.assertEquals([a["name"] for a in contents], ["Expected First", "Expected Second", "Expected Third"])
+
+    def test_filter_top_albums(self) -> None:
+        # given
+        foo_cat = ITunesCategoryFactory(label="Foo", term="Foo")
+        bar_cat = ITunesCategoryFactory(label="Bar", term="Bar")
+        foo_album = AlbumFactory(artist="Foo Fighters", itunes_category=foo_cat)
+        bar_album = AlbumFactory(name="Bar Songs", itunes_category=bar_cat)
+
+        # when
+        foo_response = self.client.get("/top-albums/?category=Foo")
+        bar_response = self.client.get("/top-albums/?category__not=Foo")
+
+        # then
+        self.assertEquals(foo_response.status_code, HTTPStatus.OK)
+        foo_contents, _ = self._assert_response_has_contents_and_pagination(foo_response)
+        self.assertEquals(len(foo_contents), 1)
+        self.assertEquals(foo_contents[0]["artist"], "Foo Fighters")
+        self.assertEquals(bar_response.status_code, HTTPStatus.OK)
+        bar_contents, _ = self._assert_response_has_contents_and_pagination(bar_response)
+        self.assertEquals(len(bar_contents), 1)
+        self.assertEquals(bar_contents[0]["name"], "Bar Songs")
 
     def _assert_response_has_contents_and_pagination(self, response) -> Tuple[list, dict]:
         data = json.loads(response.content.decode("UTF-8"))

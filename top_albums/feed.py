@@ -2,7 +2,7 @@ import decimal
 import functools
 import http.client
 import json
-from typing import Any, Callable, Dict, List, Optional, Sequence, Tuple
+from typing import Callable, List, Optional, Tuple
 
 from dateutil import parser
 from django.forms import model_to_dict
