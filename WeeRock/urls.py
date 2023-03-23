@@ -16,6 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from top_albums.album_view import TopAlbumsView
+from top_albums.health_view import HealthView
+
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("top-albums/", TopAlbumsView.as_view(), name="topalbums"),
+    path("", HealthView.as_view(), name="healthcheck")
 ]

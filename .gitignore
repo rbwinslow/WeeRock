@@ -54,6 +54,9 @@ db.sqlite3-journal
 instance/
 .webassets-cache
 
+# Mac Finder
+.DS_Store
+
 # JetBrains IDE (PyCharm) stuff (from here down)
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 

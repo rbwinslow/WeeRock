@@ -6,7 +6,10 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "WeeRock.settings")
+    os.environ.setdefault(
+        "DJANGO_SETTINGS_MODULE",
+        "WeeRock.settings.prod" if "usr/src/app" in os.getcwd() else "WeeRock.settings.dev"
+    )
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
