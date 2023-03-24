@@ -1,9 +1,11 @@
 from django.core.management import BaseCommand
 
 from top_albums.album_view import TopAlbumsView
+from top_albums.docs import apidocs
 
 
 class Command(BaseCommand):
 
     def handle(self, *args, **options):
-        self.stdout.write(TopAlbumsView.get.__doc__)
+        for doc in apidocs():
+            self.stdout.write(doc + "\n\n")
