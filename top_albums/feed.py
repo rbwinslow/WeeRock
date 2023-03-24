@@ -45,7 +45,9 @@ class ITunesFeed:
         # Hint: "acc" is a pair (tuple) where [0] is new list we're building and [1] is last id value visited.
         categories = sorted(categories, key=lambda x: x.id)
         categories = functools.reduce(
-            lambda acc, cat: (acc[0]+[cat] if acc[1] != cat.id else acc[0], cat.id), categories, ([], 0)
+            lambda acc, cat: (acc[0]+[cat] if acc[1] != cat.id else acc[0], cat.id),
+            categories,
+            ([], 0)
         )[0]
 
         return albums, categories
