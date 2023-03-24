@@ -315,7 +315,8 @@ class TopAlbumsView(View):
         pagination = {"page_size": page_size}
         if page > 1:
             pagination["previous_page"] = request.build_absolute_uri(
-                f"/top-albums/?page={page - 1}&page_size={page_size}")
+                f"/top-albums/?page={page - 1}&page_size={page_size}"
+            )
         if count_all_results > page * page_size:
             pagination["next_page"] = request.build_absolute_uri(f"/top-albums/?page={page + 1}&page_size={page_size}")
         return pagination

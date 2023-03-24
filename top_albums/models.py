@@ -33,7 +33,7 @@ class Album(models.Model):
     normalized, in contrast with iTunes categories. (Allowing for fewer than three is easy, by making these fields
     NULL-able.)
 
-    Cascading deletion from ITunesCategory are explicitly disabled because we don't control categories and our feed
+    Cascading deletion from ITunesCategory is explicitly disabled because we don't control categories and our feed
     doesn't tell us if the iTunes taxonomy has changed, so we foresee no meaningful deletion scenario (YAGNI).
     """
 
