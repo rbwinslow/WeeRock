@@ -85,6 +85,8 @@ To populate the database from the current list provided by Apple, I wrote a "dow
 
     python3 manage.py download
    
+This command is implemented in `top_albums/management/commands/download.py`.
+
 By "merging," I mean top albums from the feed are upserted, and any existing albums in the table that weren't in the feed have their "top" status taken away (`is_itunes_top = False`) but they aren't deleted.
 
 ### Additional filtering options to restrict and/or sort on data
@@ -103,7 +105,7 @@ There is no CRUD for iTunes categories, partially on the assumption that downloa
 
 ### User authentication
 
-This is an area where the approach would be very different if I had chosen to base the API on Djang REST Framework. Instead, I hacked up a very minimal Basic Auth solution based on the factory-equipped user management and authentication features in Django.
+This is an area where the approach would be very different if I had chosen to base the API on Django REST Framework. Instead, I hacked up a very minimal Basic Auth solution based on the factory-equipped user management and authentication features in Django.
 
 To set up a user who can authenticate, you want to use the Django [Python shell](https://docs.djangoproject.com/en/4.1/ref/django-admin/#shell): `python3 manage.py shell`
 
