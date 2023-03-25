@@ -48,13 +48,13 @@ class TopAlbumsView(View):
                   "artist": "ABBA",
                   "artist_url": "https://music.apple.com/us/artist/abba/372976?uo=2",
                   "id": 1422648512,
-                  ...
-                  "itunes_category_term": "Pop"
+                  ... more fields ...
                 },
-                ...
-                "pagination": {
-                  "page_size": 68
-                }
+                ... more albums ...
+              ],
+              "pagination": {
+                "page_size": 68
+              }
             }
 
         Get the current list of top albums on iTunes, optionally paginated.
@@ -119,7 +119,10 @@ class TopAlbumsView(View):
         GET /top-albums/?sort=artist&category=Rock&artist__not=Various+Artists
 
         # Top albums cheaper than $12.00
-        GET  /top-albums/?price__lt=12.00
+        GET /top-albums/?price__lt=12.00
+
+        # Top soundtracks (not using category because there are multiple that apply)
+        GET /top-albums/?name__contains=Motion+Picture
 
         """
         page = request.GET.get("page")

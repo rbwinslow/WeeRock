@@ -105,7 +105,7 @@ There is no CRUD for iTunes categories, partially on the assumption that downloa
 
 ### User authentication
 
-This is an area where the approach would be very different if I had chosen to base the API on Django REST Framework. Instead, I hacked up a very minimal Basic Auth solution based on the factory-equipped user management and authentication features in Django.
+This is an area where the approach would be very different if I had chosen to base the API on Django REST Framework. Instead, I hacked up (with the help of a plagiarized Django snippet, noted in source comments) a very minimal Basic Auth solution based on the factory-equipped user management and authentication features in Django.
 
 To set up a user who can authenticate, you want to use the Django [Python shell](https://docs.djangoproject.com/en/4.1/ref/django-admin/#shell): `python3 manage.py shell`
 
